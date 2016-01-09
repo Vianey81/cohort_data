@@ -145,6 +145,15 @@ def all_students_tuple_list(filename):
     student_list = []
 
     # Code goes here
+    cohort_data = open(filename)
+    for line in cohort_data:
+        student_data = line.rstrip().split("|")
+        full_name = student_data[0] + " " + student_data[1]
+        if student_data[2] == "":
+            my_tuple = (full_name,student_data[4])
+        else:
+            my_tuple = (full_name,student_data[2],student_data[3],student_data[4])
+        student_list.append(my_tuple)
 
     return student_list
 
@@ -157,7 +166,15 @@ def find_cohort_by_student_name(student_list):
     'Student not found.' when appropriate. """
 
     # Code goes here
+    search_name = raw_input("Enter student's full name: ").rstrip()
+    all_students = all_students_tuple_list(student_list)
 
+    for student in all_students:
+        if student[0].lower() == search_name.lower():
+            try:
+                return student[3]
+            except IndexError:
+                return "Staff members do not have cohorts."
     return "Student not found."
 
 
@@ -179,6 +196,9 @@ def find_name_duplicates(filename):
     duplicate_names = set()
 
     # Code goes here
+    cohort_data = open(filename)
+  
+    duplicate_names = (n_line[0] for n_line = line.rstrip().split("|") in cohort_data)
 
     return duplicate_names
 
